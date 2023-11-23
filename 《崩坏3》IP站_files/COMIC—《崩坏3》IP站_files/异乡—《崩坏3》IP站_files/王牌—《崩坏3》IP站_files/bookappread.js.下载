@@ -1,0 +1,20 @@
+const appUa = navigator.userAgent.toLowerCase();
+const isApp = /mihoyobbs/.test(appUa) || !!(window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.miHoYo) || !!(window.MiHoYoJSInterface && window.MiHoYoJSInterface.closePage);
+// 实例化
+
+const mhyAly = miHoYoAnalysis.init({
+    appId: '9', // 应用id
+    needUid: false,
+    debug: false, // true表示调用测试环境接口，false则调用正式环境接口
+    pagename: "漫画详情页", // 页面名称
+    pageExtrainfo: {isApp}
+});
+
+
+//20200316数据上传begin
+function enterBookDetail(button,url) {
+    // 上报具体事件
+    mhyAly.trackEvent('Click', button, "")
+    window.location.href = url
+}
+//20200316数据上传end

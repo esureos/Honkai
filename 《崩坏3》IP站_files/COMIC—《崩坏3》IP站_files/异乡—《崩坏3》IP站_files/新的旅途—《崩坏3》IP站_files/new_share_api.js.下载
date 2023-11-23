@@ -1,0 +1,334 @@
+miHoYoShareApiXNR = null;
+miHoYoShareApiObj = null;
+var MiHoYoShareApi = function(config, callback){
+    this.self = this;
+    miHoYoShareApiObj = this;
+    if(callback)
+        this.callback = callback;
+    else
+        this.callback = function(){}
+    this.timestamp = null;
+    this.noncestr = randomString(17);
+    this.signature = null;
+    if(!config){
+        this.config = {
+            "name"        :  "share_api",
+            "enviroment"  :  "production",
+            "title"       :  document.title,
+            "desc"     :  document.title,
+            "link"        :  document.location.href,
+            "pic"         :  "https://static.event.mihoyo.com/bh3_web_feature/bh3_elite_training/images/mihoyo_logo.png",
+            "bind" :  {
+                "weixin":"weixin-icon",
+                "weibo":"weibo-icon",
+                "tieba":"tieba-icon",
+                "qq":"qq-icon"
+            },
+            "onclick" :  {
+                "weixin":(function(){}),
+                "weibo":(function(){}),
+                "tieba":(function(){}),
+                "qq":(function(){})
+            }
+        };
+    }
+    else{
+        this.config = config;
+    }
+    if(this.config["bind"]["weixin"]){
+        this.getWeixinSignature()
+        document.getElementById(this.config["bind"]["weixin"]).addEventListener("click", function(){miHoYoShareApiObj.shareTo("weixin")})
+    }
+    if(this.config["bind"]["weibo"]){
+        document.getElementById(this.config["bind"]["weibo"]).addEventListener("click", function(){miHoYoShareApiObj.shareTo("weibo")})
+    }
+    if(this.config["bind"]["tieba"]){
+        document.getElementById(this.config["bind"]["tieba"]).addEventListener("click", function(){miHoYoShareApiObj.shareTo("tieba")})
+    }
+    if(this.config["bind"]["qq"]){
+        document.getElementById(this.config["bind"]["qq"]).addEventListener("click", function(){miHoYoShareApiObj.shareTo("qq")})
+    }
+}
+
+MiHoYoShareApi.prototype.shareTo = function(destination){
+    this.config.onclick[destination]();
+    switch(destination){
+        case "weixin" : {
+            break;
+        }
+        case "weibo"  : {
+            window.open('http://service.weibo.com/share/share.php?appkey=&title='+this.config.title+'&url='+this.config.link+'&pic='+this.config.pic+'&searchPic=false&style=simple');
+            miHoYoShareApiObj.callback("weibo");
+            break;
+        }
+        case "tieba"  : {
+            window.open('https://tieba.baidu.com/f/commit/share/openShareApi?title='+this.config.title+'&url='+this.config.link);
+            miHoYoShareApiObj.callback("tieba");
+            break;
+        }
+        case "qq"     :{
+            window.open('https://connect.qq.com/widget/shareqq/index.html?url='+this.config.link+'&title='+this.config.title+"&desc="+this.config.desc+"&summary="+this.config.desc+"&site=mihoyo&pics="+this.config.pic);
+            miHoYoShareApiObj.callback("qq");
+            break;
+        }
+    }
+}
+
+MiHoYoShareApi.prototype.updateContent = function(content){
+    this.config.title = content.title;
+    this.config.desc = content.desc;
+    this.config.link = content.link;
+    this.config.pic = content.pic
+    wx.onMenuShareTimeline({
+        title: miHoYoShareApiObj.config["title"],
+        link: miHoYoShareApiObj.config["link"], 
+        imgUrl: miHoYoShareApiObj.config["pic"], 
+        success: function () { 
+            if(!(miHoYoShareApiObj.config["enviroment"] == "production")){
+                alert("success!");
+            }
+            miHoYoShareApiObj.callback("weixin");
+        },
+        cancel: function () { 
+            if(!(miHoYoShareApiObj.config["enviroment"] == "production")){
+                alert("canceled!");
+            }
+        }
+    });
+    wx.onMenuShareAppMessage({
+        title: miHoYoShareApiObj.config["title"], 
+        desc: miHoYoShareApiObj.config["desc"], 
+        link: miHoYoShareApiObj.config["link"], 
+        imgUrl: miHoYoShareApiObj.config["pic"],
+        type: 'link',
+        dataUrl: '',
+        success: function () { 
+            if(!(miHoYoShareApiObj.config["enviroment"] == "production")){
+                alert("success!");
+            }
+            miHoYoShareApiObj.callback("weixin");
+        },
+        cancel: function () { 
+            if(!(miHoYoShareApiObj.config["enviroment"] == "production")){
+                alert("canceled!");
+            }
+        }
+    });
+    wx.onMenuShareQQ({
+        title: miHoYoShareApiObj.config["title"], 
+        desc: miHoYoShareApiObj.config["desc"], 
+        link: miHoYoShareApiObj.config["link"], 
+        imgUrl: miHoYoShareApiObj.config["pic"],
+        success: function () { 
+            if(!(miHoYoShareApiObj.config["enviroment"] == "production")){
+                alert("success!");
+            }
+            miHoYoShareApiObj.callback("weixin");
+        },
+        cancel: function () { 
+            if(!(miHoYoShareApiObj.config["enviroment"] == "production")){
+                alert("canceled!");
+            }
+        }
+    });
+}
+
+MiHoYoShareApi.prototype.update = function(config, callback){
+    this.callback = callback;
+    this.timestamp = null;
+    this.noncestr = randomString(17);
+    this.signature = null;
+    if(!config){
+        this.config = {
+            "name"        :  "share_api",
+            "enviroment"  :  "production",
+            "title"       :  document.title,
+            "desc"     :  document.title,
+            "link"        :  document.location.href,
+            "pic"         :  "https://static.event.mihoyo.com/bh3_web_feature/bh3_elite_training/images/mihoyo_logo.png",
+            "bind" :  {
+                "weixin":"weixin-icon",
+                "weibo":"weibo-icon",
+                "tieba":"tieba-icon"
+            },
+            "onclick" :  {
+                "weixin":(function(){}),
+                "weibo":(function(){}),
+                "tieba":(function(){})
+            }
+        };
+    }
+    else{
+        this.config = config;
+    }
+    if(this.config["bind"]["weixin"]){
+        this.getWeixinSignature()
+        refreshNodeById(this.config["bind"]["weixin"]);
+        document.getElementById(this.config["bind"]["weixin"]).remove
+        document.getElementById(this.config["bind"]["weixin"]).addEventListener("click", function(){miHoYoShareApiObj.shareTo("weixin")})
+    }
+    if(this.config["bind"]["weibo"]){
+        refreshNodeById(this.config["bind"]["weibo"]);
+        document.getElementById(this.config["bind"]["weibo"]).addEventListener("click", function(){miHoYoShareApiObj.shareTo("weibo")})
+    }
+    if(this.config["bind"]["tieba"]){
+        refreshNodeById(this.config["bind"]["tieba"]);
+        document.getElementById(this.config["bind"]["tieba"]).addEventListener("click", function(){miHoYoShareApiObj.shareTo("tieba")})
+    }
+}
+
+MiHoYoShareApi.prototype.getWeixinSignature = function(){
+    /*miHoYoShareApiXNR=GetXmlHttpObject();
+    if (miHoYoShareApiXNR==null)
+    {
+        alert ("Browser does not support HTTP Request")
+        return 0;
+    } */
+    var url="https://event.mihoyo.com/weixin_api/get_js_ticket.php?noncestr="+this.noncestr+"&sid="+Math.random()+"&url="+encodeURIComponent(window.location.protocol+"//"+window.location.host+window.location.pathname+window.location.search);
+    var JSONP = document.createElement("script");    
+    JSONP.type = "text/javascript";    
+    JSONP.src = url+"&callback=miHoYoShareApiWeixinResponse"
+    document.getElementsByTagName("head")[0].appendChild(JSONP);
+    /*miHoYoShareApiXNR.onreadystatechange = miHoYoShareApiWeixinResponse;
+    miHoYoShareApiXNR.open("GET",url,true);
+    miHoYoShareApiXNR.send(null);*/
+} 
+
+function miHoYoShareApiWeixinResponse(response_data) 
+{ 
+    if(1)//(miHoYoShareApiXNR.readyState==4 || miHoYoShareApiXNR.readyState=="complete")
+    { 
+        //response_data = eval("(" + miHoYoShareApiXNR.responseText + ")");
+        miHoYoShareApiObj.timestamp = response_data.timestamp;
+        miHoYoShareApiObj.signature = response_data.signature;
+        wx.config({
+            debug: !(miHoYoShareApiObj.config["enviroment"] == "production"), 
+            appId: 'wx281e4403d36c05ee', 
+            timestamp: miHoYoShareApiObj.timestamp,
+            nonceStr: miHoYoShareApiObj.noncestr,
+            signature: miHoYoShareApiObj.signature,
+            jsApiList: ["onMenuShareTimeline","onMenuShareAppMessage","onMenuShareQQ"] 
+        });
+        wx.ready(function(){
+            wx.onMenuShareTimeline({
+                title: miHoYoShareApiObj.config["title"],
+                link: miHoYoShareApiObj.config["link"], 
+                imgUrl: miHoYoShareApiObj.config["pic"], 
+                success: function () { 
+                    if(!(miHoYoShareApiObj.config["enviroment"] == "production")){
+                        alert("success!");
+                    }
+                    miHoYoShareApiObj.callback("weixin");
+                },
+                cancel: function () { 
+                    if(!(miHoYoShareApiObj.config["enviroment"] == "production")){
+                        alert("canceled!");
+                    }
+                }
+            });
+            wx.onMenuShareAppMessage({
+                title: miHoYoShareApiObj.config["title"], 
+                desc: miHoYoShareApiObj.config["desc"], 
+                link: miHoYoShareApiObj.config["link"], 
+                imgUrl: miHoYoShareApiObj.config["pic"],
+                type: 'link',
+                dataUrl: '',
+                success: function () { 
+                    if(!(miHoYoShareApiObj.config["enviroment"] == "production")){
+                        alert("success!");
+                    }
+                    miHoYoShareApiObj.callback("weixin");
+                },
+                cancel: function () { 
+                    if(!(miHoYoShareApiObj.config["enviroment"] == "production")){
+                        alert("canceled!");
+                    }
+                }
+            });
+            wx.onMenuShareQQ({
+                title: miHoYoShareApiObj.config["title"], 
+                desc: miHoYoShareApiObj.config["desc"], 
+                link: miHoYoShareApiObj.config["link"], 
+                imgUrl: miHoYoShareApiObj.config["pic"],
+                success: function () { 
+                    if(!(miHoYoShareApiObj.config["enviroment"] == "production")){
+                        alert("success!");
+                    }
+                    miHoYoShareApiObj.callback("weixin");
+                },
+                cancel: function () { 
+                    if(!(miHoYoShareApiObj.config["enviroment"] == "production")){
+                        alert("canceled!");
+                    }
+                }
+            });
+        });
+    } 
+}
+
+function randomString(len) {
+    len = len || 32;
+    var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
+    var maxPos = $chars.length;
+    var pwd = '';
+    for (i = 0; i < len; i++) {
+        pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+    }
+    return pwd;
+}
+
+function GetXmlHttpObject()
+{
+    var xmlHttp=null;
+    try
+    {
+        // Firefox, Opera 8.0+, Safari
+        xmlHttp=new XMLHttpRequest();
+    }
+    catch (e)
+    {
+     // Internet Explorer
+        try
+        {
+            xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+        }
+        catch (e)
+        {
+            xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+    }
+    return xmlHttp;
+}
+
+function refreshNodeById(id){
+    var old_element = document.getElementById(id);
+    var new_element = old_element.cloneNode(true);
+    old_element.parentNode.replaceChild(new_element, old_element);
+}
+
+function setCookie(_name,_value,_time)
+{
+    var Days = 30;
+    var exp = new Date();
+    if(!_time)
+        exp.setTime(exp.getTime() + Days*24*60*60*1000);
+    else
+        exp.setTime(exp.getTime() + _time);
+    document.cookie = _name + "="+ escape (_value) + ";expires=" + exp.toGMTString();
+}
+
+function delCookie(_name)
+{
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    var cval=getCookie(_name);
+    if(cval!=null) document.cookie= _name + "="+cval+";expires="+exp.toGMTString();
+}
+
+function getCookie(_name)
+{
+    var arr = document.cookie.match(new RegExp("(^| )"+_name+"=([^;]*)(;|$)"));
+    if(arr != null)
+    return unescape(arr[2]);
+    return null;
+}

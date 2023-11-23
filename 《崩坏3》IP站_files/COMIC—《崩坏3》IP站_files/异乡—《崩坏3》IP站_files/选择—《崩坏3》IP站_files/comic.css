@@ -1,0 +1,318 @@
+.maincomic{
+	position: relative;
+	width: 750px;
+	height: 100px;
+	background-image: url(../image/maincomic.png);
+	background-position: left top;
+	background-repeat: no-repeat;
+	font-size: 36px;
+	font-weight: bold;
+	line-height: 100px;
+	text-indent: 16px;
+}
+
+.maincomic div{
+	position: absolute;
+	top: 70px;
+	font-size: 20px;
+	color: #AEAEAE;
+	line-height: 22px;
+	font-weight: normal;
+}
+
+.extracomic{
+	position: relative;
+	width: 750px;
+	height: 100px;
+	background-image: url(../image/maincomic.png);
+	background-position: left top;
+	background-repeat: no-repeat;
+	font-size: 36px;
+	font-weight: bold;
+	line-height: 100px;
+	text-indent: 16px;
+}
+
+.extracomic div{
+	position: absolute;
+	top: 70px;
+	font-size: 20px;
+	color: #AEAEAE;
+	line-height: 22px;
+	font-weight: normal;
+}
+
+
+.container{
+	position: relative;
+	left: 50%;
+	margin-left: -359px;
+	width: 718px;
+	min-height: 220px;
+	margin-top:8px;
+	margin-bottom: 16px;
+	border:1px solid #AEAEAE;
+	border-radius: 8px;
+
+}
+
+.container-cover{
+	position: absolute;
+	top:5px;
+	left:5px;
+	width: 319px;
+	height: 231px;
+	border: 1px solid #F5F5F5;
+	overflow: hidden;
+	border-radius: 8px;
+}
+
+.container-cover img{
+	width: 100%;
+}
+
+.container-title{
+	position: absolute;
+	left: 344px;
+	top:5px;
+	height: 50px;
+	width: 340px;
+	font-size: 32px;
+	font-weight: bold;
+	color: black;
+	text-indent: 18px;
+	line-height: 80px;
+}
+
+.container-title-button{
+	position: absolute;
+	left:302px;
+	top:0px;
+	width: 14px;
+	height: 100%;
+	background-image: url(../image/btn_prev.png);
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.container-description{
+	position: absolute;
+	left: 344px;
+	bottom: 5px;
+	
+	width: 331px;
+	font-size: 22px;
+	padding-left: 15px;
+	line-height: 30px;
+	color: #AEAEAE;
+	letter-spacing: 2px;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 5;
+	overflow: hidden;
+}
+
+
+.detail_img_bg{
+	position: relative;
+	width: 100%;
+	height: 500px;
+	overflow: hidden;
+	background-color: #1f2947;
+}
+
+.cover_bg{
+	position: absolute;
+	top: -50px;
+	left: -50px;
+	width: 850px;
+	height: auto;
+	-webkit-filter: blur(30px);
+    -moz-filter: blur(30px);
+    -ms-filter: blur(30px);
+    filter: blur(30px);
+    overflow: hidden;
+    opacity: 0.5;
+}
+
+.detail_img{
+	position: absolute;
+	top: 105px;
+	left: 16px;
+	width: 320px;
+	height: 216px;
+	border: 2px solid white;
+	border-radius: 8px;
+	overflow: hidden;
+	opacity: 1;
+}
+
+.cover{
+	width: 100%;
+}
+
+.title{
+	position: absolute;
+	top: 145px;
+	left: 400px;
+	width: 280px;
+	color: white;
+	font-size: 44px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.read{
+	position: absolute;
+	top: 269px;
+	left: 400px;
+	width: 280px;
+	height: 52px;
+}
+
+.read_button{
+	position: absolute;
+	width: 280px;
+	height: 100%;
+	background-color: #fedf4c;
+	border-radius: 8px;
+	color: #313131;
+	font-family: "Microsoft YaHei";
+    font-size: 27px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-align: center;
+    justify-content:center;
+    align-items: center;
+    display:-webkit-flex;
+}
+
+.detail_info1{
+	position: absolute;
+	left: 16px;
+	top: 370px;
+	width: 718px;
+	font-family: "Microsoft YaHei";
+	color: white;
+    font-size: 24px;
+    line-height: 35px;
+    max-height: 145px;
+    overflow: hidden;
+}
+
+.line{
+	position: absolute;
+	top: 350px;
+	width: 100%;
+	height: 2px;
+	background-image: url(../image/comic_line.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color: transparent;
+	left:0px;
+}
+
+.detail_info2{
+	position: absolute;
+	left: 400px;
+	top: 236px;
+	width: 280px;
+	font-size: 18px;
+	color: white;
+	text-align: center;
+}
+
+.comment_board {
+	position: relative;
+	top:10px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	left: 50%;
+	margin-left: -140px;
+	height: 52px;
+	width: 280px;
+	background-image: url(../image/btn_loadcomment.png);
+	background-repeat: no-repeat;
+	border-radius: 2px;
+}
+
+.detail_chapter {
+	position: relative;
+	left: 20px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-pack: distribute;
+    justify-content: space-between;
+    width: 710px;
+    padding: 15px 0 10px 0;
+}
+
+.detail_chapter_container{
+	position: relative;
+	width: 225px;
+	display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    flex-direction: column;
+    background-color: #f5f5f5;
+
+    margin-bottom: 12px;
+    border-radius:12px;
+
+}
+
+.detail_chapter_container_img{
+	width: 225px;
+	height: 225px;
+}
+.detail_chapter_container_img img{
+	border-radius:12px 12px 0 0;
+	width: 100%;
+	height: 100%;
+}
+.detail_chapter_container_banner {
+	position: relative;
+    width: 100%;
+    height: 60px;
+	bottom: 0;
+	background-color: #eeeeee;
+	border-radius: 0 0 12px 12px;
+	font-family: "Microsoft YaHei";
+	font-size: 22px;
+	color: #313131;
+	text-align: center;
+	justify-content:center;
+	align-items: center;
+	display:-webkit-flex;
+}
+
+.chapter_getmore_div{
+	height: 60px;
+	width:100%;
+}
+
+.chapter_getmore{
+	position: relative;
+	left: 50%;
+	width: 280px;
+	margin-left: -140px;
+    height: 52px;
+	background-image: url(../image/btn_loadmore.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	border-radius: 8px;
+}
+
+
+.footer{
+	width: 100%;
+	height: 50px;
+}
+

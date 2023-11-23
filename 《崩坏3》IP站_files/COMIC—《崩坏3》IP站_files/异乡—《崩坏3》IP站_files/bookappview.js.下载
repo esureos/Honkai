@@ -1,0 +1,195 @@
+const appUa = navigator.userAgent.toLowerCase();
+const isApp = /mihoyobbs/.test(appUa) || !!(window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.miHoYo) || !!(window.MiHoYoJSInterface && window.MiHoYoJSInterface.closePage);
+// 实例化
+
+const mhyAly = miHoYoAnalysis.init({
+    appId: '9', // 应用id
+    needUid: false,
+    debug: false, // true表示调用测试环境接口，false则调用正式环境接口
+    pagename: "漫画分话列页", // 页面名称
+    pageExtrainfo: {isApp}
+});
+
+// open app or locate to download page
+function appOpenView() {
+    //20200316数据上传begin
+    // 上报具体事件
+    mhyAly.trackEvent('Click', 'Wake', '')
+    //20200316数据上传end
+
+    // ga
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('event', "open", {
+        'event_category': "open_app",
+        'event_label': location.pathname
+    });
+
+    var link = location.href;
+    if (location.pathname == "/app") {
+        link = location.href.slice(0, -3) + "book/app";
+    }
+    link = encodeURIComponent(link);
+    var u = navigator && navigator.userAgent;
+    if (u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+        window.location.href = "https://oia.mihayo.com/bbs/webview%3Flink=" + link + "?app=bh3_comic";
+        return;
+    }
+
+
+    // browsers.js
+    var ua = window.navigator.userAgent || "";
+    var isIos = /iphone|ipad|ipod/i.test(ua);
+    var isWechat = /micromessenger\/([\d.]+)/i.test(ua);
+    var isQQ = /qq\/([\d.]+)/i.test(ua);
+    var isMihoyo = /mihoyo/i.test(ua);
+
+    // evoke.js
+    var iframe = null;
+    /**
+     * 通过 top.location.href 跳转
+     * 使用 top 是因为在 qq 中打开的页面不属于顶级页面(iframe级别)
+     * 自身 url 变更无法触动唤端操作
+     * @param {string}} [uri] - 需要打开的地址
+     */
+    function evokeByLocation(uri) {
+        window.top.location.href = uri;
+    }
+    /**
+     * 通过 iframe 唤起
+     * @param {string}} [uri] - 需要打开的地址
+     */
+    function evokeByIFrame(uri) {
+        if (!iframe) {
+            iframe = document.createElement('iframe');
+            iframe.frameborder = '0';
+            iframe.style.cssText = 'display:none;border:0;width:0;height:0;';
+            document.body.appendChild(iframe);
+        }
+
+        iframe.src = uri;
+    }
+
+    // visibility.js
+    /**
+     * 获取页面隐藏属性的前缀
+     * 如果页面支持 hidden 属性，返回 '' 就行
+     * 如果不支持，各个浏览器对 hidden 属性，有自己的实现，不同浏览器不同前缀，遍历看支持哪个
+     */
+    function getPagePropertyPrefix() {
+        var prefixes = ['webkit', 'moz', 'ms', 'o'];
+        var correctPrefix = void 0;
+
+        if ('hidden' in document) return '';
+
+        prefixes.forEach(function(prefix) {
+            if (prefix + 'Hidden' in document) {
+                correctPrefix = prefix;
+            }
+        });
+
+        return correctPrefix || false;
+    }
+    /**
+     * 判断页面是否隐藏（进入后台）
+     */
+    function isPageHidden() {
+        var prefix = getPagePropertyPrefix();
+        if (prefix === false) return false;
+
+        var hiddenProperty = prefix ? prefix + 'Hidden' : 'hidden';
+        return document[hiddenProperty];
+    }
+    /**
+     * 获取判断页面 显示|隐藏 状态改变的属性
+     */
+    function getVisibilityChangeProperty() {
+        var prefix = getPagePropertyPrefix();
+        if (prefix === false) return false;
+
+        return prefix + 'visibilitychange';
+    }
+    /**
+     * 检测是否唤端成功
+     * @param {function} cb - 唤端失败回调函数
+     */
+    function checkOpen(cb, timeout) {
+        var visibilityChangeProperty = getVisibilityChangeProperty();
+        var timer = setTimeout(function() {
+            var hidden = isPageHidden();
+            if (!hidden) {
+                cb();
+            }
+        }, timeout);
+
+        if (visibilityChangeProperty) {
+            document.addEventListener(visibilityChangeProperty, function() {
+                clearTimeout(timer);
+            });
+
+            return;
+        }
+
+        window.addEventListener('pagehide', function() {
+            clearTimeout(timer);
+        });
+    }
+
+    // main.js
+    var delay = 2000;
+    var url = "https://bbs.mihayo.com/download.html?app=bh3_comic";
+    var schema = "mihoyobbs://webview?link=" + link;
+    if (isMihoyo) {
+        // 如果在游戏webview中，直接打开默认浏览器进行跳转
+        location.href = "uniwebview://open_url?url=" + encodeURIComponent(window.top.location.href);
+        return;
+    }
+    if (isIos) {
+        // IOS系统
+        if (isWechat || isQQ) {
+            // 如果在微信和QQ中，直接本地打开链接（微信与QQ会提示请用其他浏览器打开链接）
+            evokeByLocation(url);
+        } else {
+            // ios9以上的safari无法使用iframe+schema方式唤起app
+            // 只能通过方法一：location.href+schema强制唤起（如果没有安装app，safari会报错，无效地址）
+            // 方法二，直接打开url，url如果服务器配置过universal link。会自动唤起url对应的app（如果没有安装app，safari会报错，无效地址）
+            evokeByLocation(schema);
+        }
+    } else if (isWechat || isQQ) {
+        // 直接本地打开链接
+        evokeByLocation(url);
+    } else {
+        // 其余情况全部使用简单的iframe打开schema协议
+        evokeByIFrame(schema);
+    }
+    checkOpen(function () {
+        // ios9以上使用location.href+schema没有安装app报错一次；检测没有唤起跳转url，对方网站也会唤起app，没安装报错第二次
+        evokeByLocation(url);
+    }, delay);
+
+
+    // var link = location.href;
+    // if (location.pathname == "/app") {
+    // 	link = location.href.slice(0, -3) + "book/app";
+    // }
+    // location.href = "mihoyobbs://webview?link=" + encodeURI(link);
+    // var openTime = +new Date();
+    // setTimeout(function () {
+    // 	// if (document.visibilityState == "visible") {
+    // 	// 	location.href = "https://bbs.mihayo.com/download.html?app=bh3_comic";
+    // 	// }
+    // 	if ((new Date()) - openTime < 1100) {//加了200ms基准误差
+    // 		location.href = "https://bbs.mihayo.com/download.html?app=bh3_comic";
+    // 	}
+    // }, 1000);
+}
+
+
+//20200316数据上传begin
+function enterBookRead(book_name,url) {
+
+    // 上报具体事件
+    mhyAly.trackEvent('Click', 'Enter', book_name)
+    window.location.href = url
+}
+//20200316数据上传end

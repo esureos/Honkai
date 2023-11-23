@@ -1,0 +1,245 @@
+.poster{
+	width: 100%;
+	height: 819px;
+	border-radius: 0 0 25px 25px;
+	border:1px solid #F5F5F5;
+}
+
+.item-container{
+	position: relative;
+	width: 100%;
+}
+
+
+.item{
+	position: relative;
+	width: 100%;
+}
+
+.item-title{
+	position: relative;
+	width: 100%;
+	height: 126px;
+	background-image: url(../image/newcomic.png);
+	background-repeat: no-repeat;
+	overflow: hidden;
+}
+
+.item-title-word-big{
+	position: relative;
+	left: 16px;
+	top:40px;
+	width: 50%;
+	height: 40px;
+	color: black;
+	font-size: 36px;
+	font-weight: bold;
+	line-height: 40px;
+}
+
+.item-title-word-small{
+	position: relative;
+	top: 40px;
+	left: 16px;
+	color: #AEAEAE;
+	font-size: 20px;
+}
+
+.more-content{
+	position: absolute;
+	right: 16px;
+	bottom: 12px;
+	height: 72px;
+	width: 131px;
+	background-image: url(../image/btn_more.png);
+	background-repeat: no-repeat;
+	color: white;
+	text-align: center;
+	line-height: 40px;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.item-cover{
+	position: relative;
+	left:16px;
+	width: 716px;
+	height: 316px;
+	background-image: url(../image/home.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 102% 102%;
+	border:1px solid #F5F5F5;
+	overflow: hidden;
+}
+
+.item-cover img{
+	width: 100%;
+	height: 100%;
+}
+
+.item-cover-title{
+	position: absolute;
+	bottom: 0px;
+	width: 718px;
+	height: 60px;
+	color: white;
+	font-size: 30px;
+	font-weight: bold;
+	line-height: 60px;
+	text-indent: 12px;
+	background-color: rgba(1,1,1, 0.5);
+}
+
+.new-comic-item .item-title{
+	background-image: url(../image/newcomic.png);
+}
+
+.new-pv-item .item-title{
+	background-image: url(../image/newpv.png);
+}
+
+.new-cg-item .item-title{
+	background-image: url(../image/newcg.png);
+}
+
+.new-fiction-item .item-title{
+	background-image: url(../image/newfiction.png);
+}
+
+
+.comic-big-container{
+	position: relative;
+	height: 690px;
+}
+
+.fiction-big-container{
+	position: relative;
+}
+
+.line{
+	position: relative;
+	top: 20px;
+	left: 16px;
+	height: 2px;
+	width: 718px;
+	background-color: #E6E6E6;
+}
+
+.comic-swiper{
+	position: relative;
+	top:40px;
+	width: 718px;
+	height: 250px;
+}
+
+.fiction-swiper{
+	position: relative;
+	width: 718px;
+	height: 250px;
+}
+
+
+.footer{
+	position: relative;
+	width: 100%;
+	height: 450px;
+	background-color: black;
+	color:white;
+	text-align: center;
+	font-size: 22px;
+	line-height: 26px;
+	margin-top: -1px;
+}
+
+.footer div:first-child{
+	height: 200px;
+	background-color: white;
+	background-image: url(../image/mihoyologo.png);
+	background-position: center;
+	background-repeat: no-repeat;
+	margin-bottom: 20px;
+}
+
+.comic-swiper-container{
+	height: 320px;
+	width: 277px;
+}
+
+.comic-swiper-container div:first-child{
+	position: relative;
+	width: 277px;
+	height: 200px;
+	overflow: hidden;
+}
+
+.comic-swiper-container div:first-child img{
+	width: 100%;
+}
+
+.comic-swiper-container div:nth-child(2){
+	position: relative;
+	top:10px;
+	width: 277px;
+	height: 40px;
+	overflow: hidden;
+	font-size: 26px;
+	color: black;
+}
+
+.fiction-swiper-container{
+	height: 320px;
+	width: 277px;
+}
+
+.fiction-swiper-container div:first-child{
+	position: relative;
+	width: 277px;
+	height: 200px;
+	overflow: hidden;
+}
+
+.fiction-swiper-container div:first-child img{
+	width: 100%;
+}
+
+.fiction-swiper-container div:nth-child(2){
+	position: relative;
+	top:10px;
+	width: 277px;
+	height: 40px;
+	overflow: hidden;
+	font-size: 26px;
+	color: black;
+}
+
+.comic-more{
+	position: relative;
+	top: 70px;
+	margin-left: auto;
+	margin-right: auto;
+	height: 39px;
+	width: 655px;
+	background-image: url(../image/comic_more.png);
+	color: white;
+	text-align: center;
+	font-size: 22px;
+	line-height: 39px;
+	font-weight: bold;
+}
+
+.landscape{
+	display: none;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index:999;
+	background-color: rgba(1,1,1,0.7);
+	background-image: url(../image/hengping.png);
+	background-size: auto 70%;
+	background-repeat: no-repeat;
+	background-position: 30%;
+	color: white;
+	text-align: center;
+	font-size: 40px;
+}
